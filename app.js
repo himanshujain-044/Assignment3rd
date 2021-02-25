@@ -42,9 +42,9 @@ app.use(cors(corsOptions))
 
 
 app.use(cors());
+const port=process.env.PORT;
 
-
-app.listen(3000,(err)=>{
+app.listen(port,(err)=>{
     if(err){
         console.log(err);
     }
@@ -67,3 +67,8 @@ app.post("/logout",Auth.ensure,user.logout);
 app.post("/update",Auth.ensure,task.update);
 app.post("/see",task.see);
 app.post("/U",task.join);
+app.get("/",(req,res)=>{
+    res.status(200).json({
+        Success:"Please open other api in postman"
+    })
+})
