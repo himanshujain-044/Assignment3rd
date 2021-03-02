@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
+const validator= require("validator");
 const DataSchema = new mongoose.Schema({
     Username:{
-        type:String,
-        unique:true,
         required:true,
+        type:String,
     },
     Title:{
         type:String,
@@ -11,28 +11,39 @@ const DataSchema = new mongoose.Schema({
     },
     Description:{
         type:String,
+        unique:true,
+        required:true,
         max:80,
     },
-    Status:String
+   TaskID:{type:mongoose.Schema.Types.ObjectId},
+        Status:String
     })
-///= mongoose.model('userdata',DataSchema);
-module.exports.DataSchema=DataSchema;
-module.exports.Task=mongoose.model('userdata',DataSchema);
 
-module.exports.mid=DataSchema.pre("save", function(next) {
-        var self = this;
-      console.log("AAAAAAAAAAAAAAAAAA");
-        mod.findOne({Username : self.Username},function(err, results) {
-            if(err) {
-                next(err);
-            } else if(results) {
-                console.warn('results', results);
-                next(new Error("Data already Inserted"));
-            } else {
-                next();
-            }
-        });
-    });
+DataSchema.pre("save",  function(next){
+   console.log("EveryThing is fine")
+   next();
+ });
+DataSchema.post("save",(next)=>{
+    console.log("Data Saved successfully");
+})
+
+module.exports.Task=mongoose.model('userdata',DataSchema);
+module.exports.DataSchema=DataSchema;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
